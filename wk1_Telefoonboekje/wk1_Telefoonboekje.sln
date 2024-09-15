@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wk1_Telefoonboekje", "wk1_Telefoonboekje\wk1_Telefoonboekje.csproj", "{81FD4797-7717-4C4D-8839-C41F73FDF9BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDomain", "MyDomain\MyDomain.csproj", "{3E651C26-75BE-41CB-B322-27E6006C9C7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81FD4797-7717-4C4D-8839-C41F73FDF9BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81FD4797-7717-4C4D-8839-C41F73FDF9BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81FD4797-7717-4C4D-8839-C41F73FDF9BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81FD4797-7717-4C4D-8839-C41F73FDF9BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E651C26-75BE-41CB-B322-27E6006C9C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E651C26-75BE-41CB-B322-27E6006C9C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E651C26-75BE-41CB-B322-27E6006C9C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E651C26-75BE-41CB-B322-27E6006C9C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04054A66-5495-4B5A-B70D-30BD150C135F}
+	EndGlobalSection
+EndGlobal
