@@ -1,0 +1,44 @@
+﻿@model MyDomain.CarColor
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+<h4>CarColor</h4>
+<hr />
+@{
+    if (ViewBag.ErrorMessage == null)
+    {
+        <h3>Are you sure you want to delete this Color?</h3>
+    }
+    else
+    {
+        <div class="custom-error">@ViewBag.ErrorMessage</div>
+    }
+}
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd class="col-sm-10">
+            <div class="custom-display">
+                @Html.DisplayFor(model => model.Color)
+                <div style="width: 100px; height: 20px; background-color: @(Model.Color)"></div>
+            </div>
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        @{
+            if (ViewBag.ErrorMessage == null)
+            {
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-primary btn-blue" />
+            }
+        }
+        <a asp-action="Index" class="btn btn-secondary btn-red">Back</a>
+    </form>
+
+</div>

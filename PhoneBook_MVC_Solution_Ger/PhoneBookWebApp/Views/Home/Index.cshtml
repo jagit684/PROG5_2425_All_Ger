@@ -1,0 +1,26 @@
+﻿<body class="GS_body1">
+
+<h1>Phonebook demo</h1>
+
+<div >
+    <img src="~/Content/pics/phonebookpic.png" style="width: 150px;height: 150px">
+</div>
+
+<br/>
+
+<div class="form-group">
+    <input type="button" onclick="openPersonList()" value="Personen" class="btn btn-primary" />
+    <input type="button" onclick="openHobbyList()" value="Hobbies" class="btn btn-primary" />
+</div>
+
+<script>
+    function openPersonList(){
+        open("Persons/Index","_self");
+    }
+
+    function openHobbyList(){
+    open("Hobbies/Index","_top");
+    }
+</script>
+
+</body>

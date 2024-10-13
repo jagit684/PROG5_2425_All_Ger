@@ -1,0 +1,46 @@
+﻿@model PhoneBookWebApp.ViewModels.HobbyViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<body class="GS_body3">
+
+<h1 class="GS_title1">Create Hobby</h1>
+<img src="~/Content/pics/browntoycar.png" style="float:right" height="100"/>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Hobby.Titel" class="control-label"></label>
+                <input asp-for="Hobby.Titel" class="form-control" />
+                <span asp-validation-for="Hobby.Titel" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="picPath" class="control-label"></label>
+                <input asp-for="picPath" class="form-control" />
+                <span asp-validation-for="picPath" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                <input type="button" onclick="myCancel()" value="Cancel" class="btn btn-secundary" />
+            </div>
+            <br/>
+        </form>
+    </div>
+</div>
+</body>
+
+<script>
+function myCancel() {
+  open("Index", "_self");
+}
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,80 @@
+﻿@model CarsWebApp.Models.CarsViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cars.First().Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cars.First().Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cars.First().Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cars.First().Year)
+            </th>
+            <th style="max-width: 20px">
+                Color <!-- ID-->
+            </th>
+            <th style="max-width: 30px">
+            <th style="max-width: 50px"></th>
+            <th style="max-width: 100px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Cars)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td style="max-width:20px">
+                    @Html.DisplayFor(modelItem => item.CarColorId)
+                </td>
+                <td style="max-width:30px">
+                    @if (item.CarColor != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.CarColor.Color)
+                    }
+                </td>
+                <td>
+                    <div style="width: 100px; height: 20px; background-color: @(item.CarColor?.Color ?? "")"></div>
+                </td>
+                <td style="max-width:100px">
+                    @using (Html.BeginForm("UpdateCarColor", "Car", FormMethod.Post))
+                    {
+                        @* @Html.HiddenFor(modelItem => item.Id) *@
+
+                            <div class="custom-select">
+                                CarColor
+                                <select asp-for="@item.CarColorId" class="form-control custom-form-control" 
+                                        asp-items="ViewBag.CarColors"></select>
+                                <button type="submit" class="btn btn-primary">Go</button>
+                            </div>
+                            @* <span asp-validation-for="CarColorId" class="text-danger"></span> *@
+                           @*  @Html.DisplayFor(modelItem => item.Id)
+                            @Html.DropDownListFor(modelItem => item.CarColorId,
+                                     new SelectList(
+                                     Model.CarColors, "Id", "Color"),
+                                     "Select Color",
+                                     new { @class = "form-control custom-form-control" }
+                                     ) *@
+                    }
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

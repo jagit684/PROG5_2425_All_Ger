@@ -1,0 +1,101 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+h4 {
+    background-color: #258cfb;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-blue {
+    margin: 10px 0 0 0;
+    background-color: dodgerblue;
+    border-color: darkblue;
+}
+
+    .btn-blue:hover {
+        background-color: darkblue;
+    }
+
+.btn-green {
+    margin: 10px 0 0 0;
+    background-color: darkgray;
+    border-color: darkgreen;
+}
+
+    .btn-green:hover {
+        background-color: darkgreen;
+    }
+
+.btn-red {
+    margin: 10px 0 0 0;
+    background-color: darkgray;
+    border-color: darkred;
+}
+
+    .btn-red:hover {
+        background-color: darkred;
+    }
+
+.btn-ger {
+    background-color: #258cfb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0 0 0;
+}
+
+.custom-form-control {
+    /* Inherit Bootstrap's form-control styles */
+    /* @extend .form-control;*/
+    width: 150px;
+    appearance: none; /* Remove default arrow */
+    -webkit-appearance: none; /* Remove default arrow in Safari */
+    -moz-appearance: none; /* Remove default arrow in Firefox */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="currentColor" stroke-width=".5" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>') no-repeat right 0.75rem center;
+    background-size: 0.65em auto;
+    padding-right: 1.5rem; /* Adjust padding to make room for the arrow */
+}
+
+.custom-select {
+    display: flex;
+    align-items: center;
+    gap : 10px;
+}
+
+
+.custom-display {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.custom-error{
+    color: black;
+    font-size: 1.5em;
+    border: solid 2px red;
+    background-color: lightpink;
+    margin: 0 0 10px 0;
+}

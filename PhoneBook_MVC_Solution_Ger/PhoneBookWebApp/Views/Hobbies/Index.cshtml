@@ -1,0 +1,92 @@
+﻿@model IEnumerable<MyDomain.Models.Hobby>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="GS_title1">Hobbies</h1>
+
+@*
+<div class="GS_body4">
+    <table class="GS_table">
+        @{
+            var @count = 0;
+
+            foreach (var item in Model)
+            {
+                if (@count == 0)
+                {
+                    <tr>
+                        }
+
+                        <td class="GS_td">
+                            @if (@item.HobbyImage != null)
+                            {
+                                <img src="data:image/png;base64,@System.Convert.ToBase64String(@item.HobbyImage)" height="100" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/pics/browntoycar.png" height="100" />
+                            }
+                            <br />
+                            <span class="GS_title1">@Html.DisplayFor(modelItem => item.Titel)</span>
+                            <br />
+                            <span class="GS_small">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </span>
+                        </td>
+
+                        @{
+                            count++;
+                        }
+
+
+                        <td class="GS_td">
+                            <a asp-action="Create">
+                                <img src="~/Content/pics/browntoycar.png" height="100" />
+                                <br />
+                                <span class="GS_title1">Create new</span>
+                            </a>
+                        </td>
+              
+                    </tr>
+            
+                }
+            }
+        }
+    </table>
+</div>
+*@
+
+
+<div class="GS_flex-container">
+    @foreach (var item in Model)
+    {
+    <div>
+            @if (@item.HobbyImage != null)
+            {
+               <img src="data:image/png;base64,@System.Convert.ToBase64String(@item.HobbyImage)" height="100"/>
+            }
+            else
+            {
+                <img src="~/Content/pics/browntoycar.png" height="100"/>
+            }
+            <br/>
+            <span class="GS_title1">@Html.DisplayFor(modelItem => item.Titel)</span>
+            <br/>
+            <span class="GS_small">
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </span>
+    </div>
+    }
+    <div><a asp-action="Create">
+       <img src="~/Content/pics/browntoycar.png" height="100"/>
+        <br/>
+        <span class="GS_title1">Create new</span>
+        </a>
+    </div>
+
+</div>

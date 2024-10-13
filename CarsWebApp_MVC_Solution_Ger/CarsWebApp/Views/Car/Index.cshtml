@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MyDomain.Car>
+
+<h4>Cars <span id="car-icons"></span></h4>
+<script>
+    const carIcons = '<i class="fa-solid fa-car-side"></i> '.repeat(3);
+    document.getElementById('car-icons').innerHTML = carIcons;
+</script>
+
+<p>
+    @Html.ActionLink("Creat new car", "Create", "Car", null, new { @class = "btn btn-primary " })
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                CarColor
+            </th>
+            <th><!--bar--></th>
+            <th><!--actions--></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    <div class="custom-display">
+                        @item.CarColorId
+                        @item.CarColor?.Color
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100px; height: 20px; background-color: @(item.CarColor?.Color ?? "")"></div>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

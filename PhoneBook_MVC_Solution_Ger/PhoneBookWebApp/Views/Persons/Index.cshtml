@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MyDomain.Models.Person>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
+
+<div class="GS_body2">
+    <h1>Personen</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Picture
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Birthdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Hobbies)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @{
+                            var curfile = $"{item.FirstName}_{item.LastName}{ViewBag.postfix}";
+                            var checkfile = $"./wwwroot/Content/pics/{curfile}";
+                            var fileInfo = HostingEnvironment.ContentRootFileProvider.GetFileInfo(checkfile);
+                            if (fileInfo.Exists)
+                            {
+                                <img src="~/Content/pics/@curfile" alt="@item.FullName" height="50" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/pics/unknown.png" alt="@item.FullName" height="50" />
+                            }
+                        }
+
+
+                    </td>
+                    <td style="font-size:larger">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td style="font-size:larger">
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Birthdate)
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var hobby in item.Hobbies)
+                            {
+                                <li>@hobby.Titel</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
