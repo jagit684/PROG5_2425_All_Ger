@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MyDomain;
 using System;
 
@@ -32,103 +33,53 @@ namespace CarsWebApp_Start.Controllers
             return View(carlist);
         }
 
-        [HttpGet]
-        public IActionResult NewCreate()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewCreate([Bind("Brand, Type, Price, Year")] Car car)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    dbContext.Add(car);
-                    await dbContext.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "Error creating car with id: {Id}", car.Id);
-
-                    return View(car);
-                }
-            }
-            return View(car);
-        }
-
-
-
-
 
         [HttpGet]
         public ActionResult Create()
         {
-            Car newCar = new Car();
-
-            IEnumerable<SelectListItem> carColors = dbContext.CarColors
-              .OrderBy(c => c.Color)
-              .Select(c => new SelectListItem
-              {
-                  Value = c.Id.ToString(),
-                  Text = c.Color
-              }).ToList();
-            ViewBag.CarColors = carColors;
-
+            int newId;
             try
             {
-                var newId = dbContext.Cars.Max(c => c.Id);
-                newCar.Id = newId + 1;
+                newId = dbContext.Cars.Max(c => c.Id) + 1;
             }
             catch
             {
-                newCar.Id = 1;
+                newId = 1;
             }
-
-            return View(newCar);
+            Car newCar = new Car();
+            newCar.Id = newId;
+            CarVM carVM = new CarVM(newId, newCar, dbContext.CarColors.ToList());
+            return View(carVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Car newCar)
+        public async Task<ActionResult> Create(CarVM carVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    dbContext.Cars.Add(newCar);
+                    Car car = carVM.Car;
+                    car.CarColorId = carVM.CarColorId;
+                    dbContext.Cars.Add(car);
                     await dbContext.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Error creating car with id: {Id}", newCar.Id);
-
-                    return View(newCar);
+                    logger.LogError(ex, "Error creating car with id: {Id}", carVM.Car.Id);
                 }
             }
             else
             {
-                logger.LogError( "ModelState is Invalid", newCar.Id);
+                logger.LogError("ModelState is Invalid. Car ID: {Id}", carVM.Car.Id);
             }
-            return View(newCar);
+
+            carVM.CarColors = dbContext.CarColors.ToList();
+            return View(carVM);
         }
 
-
-        //[HttpGet]
-        //public ActionResult Delete(int? id)
-        //{
-        //    Car? toDelete = dbContext.Cars.FirstOrDefault(c => c.Id == id);
-        //    if (toDelete != null)
-        //    {
-        //        dbContext.Cars.Remove(toDelete);
-        //        dbContext.SaveChanges();
-        //    }
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         // GET: CarColors/Delete/5
         public async Task<IActionResult> Delete(int? id)
