@@ -48,7 +48,7 @@ namespace CarsWebApp_Start.Controllers
             }
             Car newCar = new Car();
             newCar.Id = newId;
-            CarVM carVM = new CarVM(newId, newCar, dbContext.CarColors.ToList());
+            CarVM carVM = new CarVM(newCar, dbContext.CarColors.ToList());
             return View(carVM);
         }
 
@@ -61,7 +61,6 @@ namespace CarsWebApp_Start.Controllers
                 try
                 {
                     Car car = carVM.Car;
-                    car.CarColorId = carVM.CarColorId;
                     dbContext.Cars.Add(car);
                     await dbContext.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -190,21 +189,15 @@ namespace CarsWebApp_Start.Controllers
 
         {
             var cars = dbContext.Cars.Include(c => c.CarColor).ToList();
-            var carColors = dbContext.CarColors.ToList();
+            ViewBag.CarColors = dbContext.CarColors.ToList();
 
-            var viewModel = new CarsViewModel
-            {
-                Cars = cars,
-                CarColors = carColors
-            };
-
-            return View(viewModel);
+            return View(cars);
         }
 
 
 
         [HttpPost]
-        public ActionResult UpdateCarColor(int carId, int carColorId)
+        public ActionResult UpdateCarColor(Car submittedCar)
         //{
         //    var car =  dbContext.Cars.Find(carId);
         //    if (car == null)
@@ -219,20 +212,20 @@ namespace CarsWebApp_Start.Controllers
         //}
 
         {
-            logger.LogInformation("UpdateCarColor called with id: {Id}, carColorId: {CarColorId}", carId, carColorId);
+            logger.LogInformation("UpdateCarColor called with id: {Id}, carColorId: {CarColorId}", submittedCar.Id, submittedCar.CarColorId);
 
-            var car = dbContext.Cars.Find(carId);
-            if (car == null)
+            var foundCar = dbContext.Cars.Find(submittedCar.Id);
+            if (foundCar == null)
             {
-                logger.LogError("Car with id: {Id} not found and carColorId: {CarColorId}", carId, carColorId);
-                return NotFound();
+                logger.LogError("Car with id: {Id} not found and carColorId: {CarColorId}", submittedCar.Id, submittedCar.CarColorId);
             }
+            else
+            {
+                foundCar.CarColorId = submittedCar.CarColorId;
+                dbContext.SaveChanges();
 
-            car.CarColorId = carColorId;
-            dbContext.SaveChanges();
-
-            logger.LogInformation("Car with id: {Id} updated with new carColorId: {CarColorId}", carId, carColorId);
-
+                logger.LogInformation("Car with id: {Id} updated with new carColorId: {CarColorId}", submittedCar.Id, submittedCar.CarColorId);
+            }
             return RedirectToAction(nameof(ListCarsAndColors));
         }
     }

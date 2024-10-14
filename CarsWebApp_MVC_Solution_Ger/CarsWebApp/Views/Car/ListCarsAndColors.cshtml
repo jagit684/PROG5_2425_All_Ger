@@ -1,19 +1,19 @@
-﻿@model CarsWebApp.Models.CarsViewModel
+﻿@model IEnumerable<MyDomain.Car>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cars.First().Brand)
+                @Html.DisplayNameFor(model => model.First().Brand)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cars.First().Type)
+                @Html.DisplayNameFor(model => model.First().Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cars.First().Price)
+                @Html.DisplayNameFor(model => model.First().Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cars.First().Year)
+                @Html.DisplayNameFor(model => model.First().Year)
             </th>
             <th style="max-width: 20px">
                 Color <!-- ID-->
@@ -24,7 +24,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Cars)
+        @{
+            IEnumerable<MyDomain.CarColor> carColors = ViewBag.CarColors;
+            var selectListItems = carColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
+        }
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -54,12 +58,12 @@
                 <td style="max-width:100px">
                     @using (Html.BeginForm("UpdateCarColor", "Car", FormMethod.Post))
                     {
-                        @* @Html.HiddenFor(modelItem => item.Id) *@
+                        @Html.Hidden("Id", item.Id)
 
                             <div class="custom-select">
                                 CarColor
-                                <select asp-for="@item.CarColorId" class="form-control custom-form-control" 
-                                        asp-items="ViewBag.CarColors"></select>
+                                <select name="CarColorId" asp-for="@item.CarColorId" class="form-control custom-form-control"
+                                    asp-items="@selectListItems"></select>
                                 <button type="submit" class="btn btn-primary">Go</button>
                             </div>
                             @* <span asp-validation-for="CarColorId" class="text-danger"></span> *@
