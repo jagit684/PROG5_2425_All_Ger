@@ -1,33 +1,6 @@
-﻿//using Microsoft.EntityFrameworkCore;
-//using MyDomain;
-//using System.ComponentModel.DataAnnotations;
-
-//namespace CarsWebApp.Models
-//{
-//    public class CarVM
-//    {
-//        public virtual Car Car { get; set; }
-//        public virtual List<CarColor> CarColors { get; set; }
-
-//        public virtual List<CarOption> CasOptions { get; set; }
-
-//        public CarVM() {
-//            Car = new Car();
-//            CarColors = new List<CarColor>();
-//        }
-
-//        public CarVM(Car newCar, List<CarColor> carColors)
-//        {
-//            Car = newCar;
-//            CarColors = carColors;
-//        }
-
-//    }
-//}
-
-using MyDomain;
-using System.Collections.Generic;
+﻿using MyDomain;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace CarsWebApp.ViewModels
 {
@@ -53,31 +26,74 @@ namespace CarsWebApp.ViewModels
         public int? CarColorId { get; set; }
         public CarColor? CarColor { get; set; }
 
-        public virtual List<CarColor> CarColors { get; set; }
+        public virtual List<CarColor> AllCarColors { get; set; }
 
         // List of all car options with their selected status
-        public List<CarOptionVM> CarOptions { get; set; } = new List<CarOptionVM>();
+        public List<CarOptionVM> AllCarOptions { get; set; } = new List<CarOptionVM>();
+
+        public List<int> SelectedCarOptions { get; set; }
 
         public CarVM()
         {
-            CarColors = new List<CarColor>();
+            AllCarColors = new List<CarColor>();
+            AllCarOptions = new List<CarOptionVM>();
+            SelectedCarOptions = new List<int>();
         }
-        public CarVM(int Id, List<CarColor> carColors)
+        public CarVM(int Id, List<CarColor> allCarColors, List<int> selectedCarOptions, List<CarOption> allCarOptions)
         {
             this.Id = Id;
-            CarColors = carColors;
+            this.AllCarColors = allCarColors;
+            SelectedCarOptions = selectedCarOptions ?? new List<int>();
+            InitOptions(selectedCarOptions, allCarOptions);
         }
 
-        public CarVM(int id, string brand, string type, int price, int colorId, List<CarColor> carColors)
+
+        public CarVM(int id, string brand, string type, int price, int year, int colorId,
+                        List<CarColor> allCarColors,
+                        List<int> selectedCarOptions, List<CarOption> allCarOptions)
         {
-            this.Id = Id;
-            this.Brand = Brand;
-            this.Type = Type;
-            this.Price = Price;
-            this.Year = Year;
-            this.CarColorId = CarColorId;
-            this.CarColor = CarColor;
-            CarColors = carColors;
+            this.Id = id;
+            this.Brand = brand;
+            this.Type = type;
+            this.Price = price;
+            this.Year = year;
+            this.AllCarColors = allCarColors;
+            InitColor(colorId);
+            SelectedCarOptions = selectedCarOptions ?? new List<int>();
+            InitOptions(selectedCarOptions, allCarOptions);
+        }
+
+        private void InitColor(int colorId)
+        {
+            this.CarColorId = colorId;
+            this.CarColor = AllCarColors?.FirstOrDefault(c => c.Id == colorId);
+        }
+
+        private void InitOptions(List<int>? selectedCarOptions, List<CarOption> allCarOptions)
+        {
+            if (selectedCarOptions != null)
+            {
+                SelectedCarOptions = selectedCarOptions;
+                AllCarOptions = new List<CarOptionVM>();
+                foreach (var option in allCarOptions)
+                {
+                    AllCarOptions.Add(new CarOptionVM(
+                        option.Id,
+                        option.Option,
+                        selectedCarOptions.Contains(option.Id)));
+                }
+            }
+            else
+            {
+                AllCarOptions = new List<CarOptionVM>();
+                foreach (var option in allCarOptions)
+                {
+                    AllCarOptions.Add(new CarOptionVM(
+                        option.Id,
+                        option.Option,
+                        false));
+                }
+            }
         }
     }
 
@@ -86,6 +102,13 @@ namespace CarsWebApp.ViewModels
         public int Id { get; set; }
         public string Option { get; set; } = string.Empty;
         public bool IsSelected { get; set; }
+
+        public CarOptionVM(int id, string option, bool isSelected)
+        {
+            Id = id;
+            Option = option;
+            IsSelected = isSelected;
+        }
     }
 
 

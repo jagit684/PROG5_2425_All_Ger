@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using MyDomain;
+using NuGet.Protocol;
 using System;
 
 namespace CarsWebApp_Start.Controllers
@@ -46,7 +47,12 @@ namespace CarsWebApp_Start.Controllers
             {
                 newId = 1;
             }
-            CarVM carVM = new CarVM(newId,  dbContext.CarColors.ToList());
+
+            var allCarColors = dbContext.CarColors.ToList();
+            var AllCarOptions = dbContext.CarOptions.ToList();
+            var selectedCarOptions = new List<int>();
+
+            CarVM carVM = new CarVM(newId, allCarColors, selectedCarOptions, AllCarOptions);
             return View(carVM);
         }
 
@@ -58,7 +64,7 @@ namespace CarsWebApp_Start.Controllers
             {
                 try
                 {
-                    Car car = new Car(carVM.Id, carVM.Brand, carVM.Type, carVM.Price, carVM.CarColorId);
+                    Car car = new Car(carVM.Id, carVM.Brand, carVM.Type, carVM.Price, carVM.Year, carVM.CarColorId);
                     dbContext.Cars.Add(car);
                     await dbContext.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -73,7 +79,7 @@ namespace CarsWebApp_Start.Controllers
                 logger.LogError("ModelState is Invalid. Car ID: {Id}", carVM.Id);
             }
 
-            carVM.CarColors = dbContext.CarColors.ToList();
+            carVM.AllCarColors = dbContext.CarColors.ToList();
             return View(carVM);
         }
 

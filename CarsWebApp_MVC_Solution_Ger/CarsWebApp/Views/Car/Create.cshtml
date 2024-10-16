@@ -1,7 +1,7 @@
 ﻿@model CarsWebApp.ViewModels.CarVM
 
 @{
-    IEnumerable<MyDomain.CarColor> carColors = Model.CarColors;
+    IEnumerable<MyDomain.CarColor> carColors = Model.AllCarColors;
     var selectListItems = carColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
 }
 <h4>Car <i class="fa-solid fa-car"></i></h4>
@@ -38,6 +38,55 @@
                         asp-items="@selectListItems"></select>
                 <span asp-validation-for="CarColorId" class="text-danger"></span>
             </div>
+
+
+
+
+
+            
+        <div class="form-group">
+            <div class="row">
+                @{
+                    int cnt = 0;
+                    
+                    foreach (var option in Model.AllCarOptions)
+                    {
+                        if (cnt++ % 3 == 0)
+                        {
+                        @:</div><div class="row">
+                        }
+                        @:<div class="col-4">
+                            @*<input type="checkbox" 
+                                   name="SelectedCarOptions"
+                                   value="@option.Id"
+                                  @* @(Html.Raw(option.Option ? "checked=\"checked\"" : "")) />*
+                            @:  @option.Option
+                            *@
+
+                            @option.Option
+
+                        @:</div>
+                    }
+                @:</div>
+                }
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <div class="form-group d-flex justify-content-between">
                 <input type="submit" value="Create" class="btn btn-primary btn-green" />

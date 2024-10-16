@@ -40,12 +40,13 @@ public class Car
     {
     }
 
-    public Car(int id, string brand, string type, int price, int? colorId)
+    public Car(int id, string brand, string type, int price, int year, int? colorId)
     {
         this.Id = id;
         this.Brand = brand;
         this.Type = type;
         this.Price = price;
+        this.Year = year;
         this.CarColorId = colorId;
     }
 }

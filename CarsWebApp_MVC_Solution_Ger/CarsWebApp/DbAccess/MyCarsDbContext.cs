@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyDomain;
-using CarsWebApp.ViewModels;
+
 
 namespace CarsWebApp.DbAcces;
 
@@ -93,9 +93,5 @@ public partial class MyCarsDbContext : DbContext
             new CarOption { Id = 19, Option = "Surround-View Camera", Price = 800 },
             new CarOption { Id = 20, Option = "Head-Up Display", Price = 1000 }
         );
-
     }
-
-public DbSet<CarsWebApp.ViewModels.CarVM> CarVM { get; set; } = default!;
-
 }
