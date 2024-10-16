@@ -99,3 +99,9 @@ h4 {
     background-color: lightpink;
     margin: 0 0 10px 0;
 }
+.options-display {
+    display: flex;
+/*    justify-content: space-evenly;*/
+    align-items: flex-start;
+    gap: 10px;
+}

@@ -4,11 +4,13 @@
     IEnumerable<MyDomain.CarColor> carColors = Model.AllCarColors;
     var selectListItems = carColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
 }
+
 <h4>Car <i class="fa-solid fa-car"></i></h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    
         <form asp-action="Create">
+            <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -40,36 +42,39 @@
             </div>
 
 
-
-
+            </div>
 
             
+            <div class="col-md-12">
+            
         <div class="form-group">
-            <div class="row">
-                @{
-                    int cnt = 0;
+
+                <div class="row">
+                    @{
+                        int cnt = 0;
                     
-                    foreach (var option in Model.AllCarOptions)
-                    {
-                        if (cnt++ % 3 == 0)
+                        foreach (var option in Model.AllCarOptions)
                         {
-                        @:</div><div class="row">
+                            if (cnt++ % 3 == 0)
+                            {
+                            @:</div><div class="row">
+                            }
+                            @:<div class="col-4">
+                             <input type="checkbox" name="SelectedCarOptions" value="@option.Id" />
+                                @*<input type="checkbox" 
+                                       name="SelectedCarOptions"
+                                       value="@option.Id"
+                                      @* @(Html.Raw(option.Option ? "checked=\"checked\"" : "")) />*
+                                @:  @option.Option
+                                *@
+                                @option.Option 
+                                @option.Price
+
+                            @:</div>
                         }
-                        @:<div class="col-4">
-                            @*<input type="checkbox" 
-                                   name="SelectedCarOptions"
-                                   value="@option.Id"
-                                  @* @(Html.Raw(option.Option ? "checked=\"checked\"" : "")) />*
-                            @:  @option.Option
-                            *@
-
-                            @option.Option
-
-                        @:</div>
+                    @:</div>
                     }
-                @:</div>
-                }
-            </div>
+                </div>
         </div>
 
 

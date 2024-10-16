@@ -1,13 +1,8 @@
 ﻿using CarsWebApp.DbAcces;
 using CarsWebApp.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using MyDomain;
-using NuGet.Protocol;
-using System;
 
 namespace CarsWebApp_Start.Controllers
 {

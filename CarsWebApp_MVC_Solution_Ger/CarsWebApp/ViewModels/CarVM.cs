@@ -20,6 +20,23 @@ namespace CarsWebApp.ViewModels
         [Required]
         public int Price { get; set; } = 25000;
 
+
+        public int CalculatedPrice
+        {
+            get
+            {
+                int total = Price;
+                foreach (var option in AllCarOptions)
+                {
+                    if (option.IsSelected)
+                    {
+                        total += option.Price;
+                    }
+                }
+                return total;
+            }
+        }
+
         [Range(2000, 2024)]
         public int Year { get; set; } = 2022;
 
@@ -80,6 +97,7 @@ namespace CarsWebApp.ViewModels
                     AllCarOptions.Add(new CarOptionVM(
                         option.Id,
                         option.Option,
+                        option.Price,
                         selectedCarOptions.Contains(option.Id)));
                 }
             }
@@ -91,6 +109,7 @@ namespace CarsWebApp.ViewModels
                     AllCarOptions.Add(new CarOptionVM(
                         option.Id,
                         option.Option,
+                        option.Price,
                         false));
                 }
             }
@@ -101,12 +120,14 @@ namespace CarsWebApp.ViewModels
     {
         public int Id { get; set; }
         public string Option { get; set; } = string.Empty;
+        public int Price { get; set; }
         public bool IsSelected { get; set; }
 
-        public CarOptionVM(int id, string option, bool isSelected)
+        public CarOptionVM(int id, string option, int price, bool isSelected)
         {
             Id = id;
             Option = option;
+            Price = price;
             IsSelected = isSelected;
         }
     }
