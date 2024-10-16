@@ -1,44 +1,42 @@
-﻿@model CarsWebApp.Models.CarVM
+﻿@model CarsWebApp.ViewModels.CarVM
 
+@{
+    IEnumerable<MyDomain.CarColor> carColors = Model.CarColors;
+    var selectListItems = carColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
+}
 <h4>Car <i class="fa-solid fa-car"></i></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Car.Id" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Car.Brand" class="control-label"></label>
-                <input asp-for="Car.Brand" class="form-control" />
-                <span asp-validation-for="Car.Brand" class="text-danger"></span>
+                <label asp-for="Brand" class="control-label"></label>
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Car.Type" class="control-label"></label>
-                <input asp-for="Car.Type" class="form-control" />
-                <span asp-validation-for="Car.Type" class="text-danger"></span>
+                <label asp-for="Type" class="control-label"></label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Car.Price" class="control-label"></label>
-                <input asp-for="Car.Price" class="form-control" />
-                <span asp-validation-for="Car.Price" class="text-danger"></span>
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Car.Year" class="control-label"></label>
-                <input asp-for="Car.Year" class="form-control" />
-                <span asp-validation-for="Car.Year" class="text-danger"></span>
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Car.CarColorId" class="control-label">CarColor</label>
-                @{
-                    var carColors = new List<SelectListItem>();
-                    if (Model.CarColors.Count > 0)
-                    {
-                        carColors = Model.CarColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color }).ToList();
-                    }
-                }
-                <select asp-for="Car.CarColorId" class="form-control" asp-items="carColors"></select>
-                <span asp-validation-for="Car.CarColorId" class="text-danger"></span>
+                <label asp-for="CarColorId" class="control-label">CarColor</label>
+                <select asp-for="CarColorId" class="form-control custom-form-control"
+                        asp-items="@selectListItems"></select>
+                <span asp-validation-for="CarColorId" class="text-danger"></span>
             </div>
 
             <div class="form-group d-flex justify-content-between">

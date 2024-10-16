@@ -33,12 +33,14 @@ public class Car
     [AllowNull]
     public CarColor? CarColor { get; set; }
 
+    public ICollection<CarHasOption> CarHasOptions { get; set; } = new List<CarHasOption>();
+
 
     public Car()
     {
     }
 
-    public Car(int id, string brand, string type, int price, int colorId)
+    public Car(int id, string brand, string type, int price, int? colorId)
     {
         this.Id = id;
         this.Brand = brand;

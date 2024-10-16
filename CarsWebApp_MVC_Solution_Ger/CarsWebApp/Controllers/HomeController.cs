@@ -1,4 +1,4 @@
-using CarsWebApp_Start.Models;
+using CarsWebApp_Start.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

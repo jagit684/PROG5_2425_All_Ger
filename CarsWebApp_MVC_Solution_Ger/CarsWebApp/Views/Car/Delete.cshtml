@@ -32,8 +32,12 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CarColor)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CarColor.Color)
+        <dd class="col-sm-10">
+            <div class="custom-display">
+                @Model.CarColorId
+                @Model.CarColor?.Color
+                <div style="width: 100px; height: 20px; background-color: @(Model.CarColor?.Color ?? "")"></div>
+            </div>
         </dd>
     </dl>
     

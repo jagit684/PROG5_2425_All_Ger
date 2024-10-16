@@ -1,4 +1,4 @@
-namespace CarsWebApp_Start.Models
+namespace CarsWebApp_Start.ViewModels
 {
     public class ErrorViewModel
     {

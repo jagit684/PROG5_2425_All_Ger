@@ -18,9 +18,9 @@
             <th style="max-width: 20px">
                 Color <!-- ID-->
             </th>
-            <th style="max-width: 30px">
-            <th style="max-width: 50px"></th>
+            <th style="max-width: 100px">
             <th style="max-width: 100px"></th>
+            <th style="max-width: 110px"></th>
         </tr>
     </thead>
     <tbody>
@@ -46,7 +46,7 @@
                 <td style="max-width:20px">
                     @Html.DisplayFor(modelItem => item.CarColorId)
                 </td>
-                <td style="max-width:30px">
+                <td style="max-width:100px">
                     @if (item.CarColor != null)
                     {
                         @Html.DisplayFor(modelItem => item.CarColor.Color)
@@ -55,13 +55,13 @@
                 <td>
                     <div style="width: 100px; height: 20px; background-color: @(item.CarColor?.Color ?? "")"></div>
                 </td>
-                <td style="max-width:100px">
+                <td style="max-width:110px">
                     @using (Html.BeginForm("UpdateCarColor", "Car", FormMethod.Post))
                     {
                         @Html.Hidden("Id", item.Id)
 
                             <div class="custom-select">
-                                CarColor
+                                @* CarColor *@
                                 <select name="CarColorId" asp-for="@item.CarColorId" class="form-control custom-form-control"
                                     asp-items="@selectListItems"></select>
                                 <button type="submit" class="btn btn-primary">Go</button>

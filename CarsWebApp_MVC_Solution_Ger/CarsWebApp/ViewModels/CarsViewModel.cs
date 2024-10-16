@@ -1,7 +1,7 @@
 ﻿using MyDomain;
 using System.Collections.Generic;
 
-namespace CarsWebApp.Models
+namespace CarsWebApp.ViewModels
 {
     public class CarsViewModel
     {

@@ -1,14 +1,10 @@
-﻿@model MyDomain.Car
+﻿@model CarsWebApp.ViewModels.CarVM
 
-@{
-    IEnumerable<MyDomain.CarColor> carColors = ViewBag.CarColors;
-    var selectListItems = carColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
-}
-<h4>Car <i class="fa-solid fa-car"></i></h4>
+<h4>CarVM</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="EditCarOptions">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -31,20 +27,22 @@
                 <input asp-for="Year" class="form-control" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="CarColorId" class="control-label">CarColor</label>
-                <select asp-for="CarColorId" class="form-control custom-form-control"
-                        asp-items="@selectListItems"></select>
+                <label asp-for="CarColorId" class="control-label"></label>
+                <select asp-for="CarColorId" class="form-control" asp-items="ViewBag.CarColorId"></select>
                 <span asp-validation-for="CarColorId" class="text-danger"></span>
             </div>
-
-            <div class="form-group d-flex justify-content-between">
-                <input type="submit" value="Save" class="btn btn-primary btn-green" />
-                <a asp-action="Index" class="btn btn-secondary btn-red">Cancel</a>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
