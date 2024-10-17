@@ -99,9 +99,27 @@ h4 {
     background-color: lightpink;
     margin: 0 0 10px 0;
 }
-.options-display {
+
+.option-container {
     display: flex;
-/*    justify-content: space-evenly;*/
-    align-items: flex-start;
-    gap: 10px;
+    justify-content: flex-start;
+/*    flex-direction: column;*/
+    gap: 10px; 
+}
+
+.option-text{
+    width:200px;
+}
+.option-price {
+    display: flex;
+    width:30px;
+    justify-content: flex-end;
+}
+
+.calc-price-display{
+    display:flex;
+    float:right;
+    font-size: 1.5em;
+    border: outset 4px red;
+    padding: 10px;
 }

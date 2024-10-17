@@ -21,12 +21,30 @@ namespace CarsWebApp_Start.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            IEnumerable<Car> carlist = dbContext.Cars
+            List<Car> carlist = dbContext.Cars
                     .OrderBy(c => c.Brand)
                     .ThenBy(c => c.Type)
-                    .Include(c => c.CarColor);
+                    .Include(c => c.CarColor)
+                    .Include(c => c.CarHasOptions)
+                    .ToList();
 
-            return View(carlist);
+            List<CarVM> carVMlist = new List<CarVM>();
+
+            var allCarsColors = dbContext.CarColors.ToList();
+            var allCarOptions = dbContext.CarOptions.ToList();
+
+
+            foreach (Car car in carlist)
+            {
+                var selectedCarOptions = car.CarHasOptions
+                                       .Where(o => o.CarId == car.Id)
+                                       .Select(o => o.CarOptionId)
+                                       .ToList();
+                CarVM carVM = new CarVM(car, allCarsColors, selectedCarOptions, allCarOptions);
+                carVMlist.Add(carVM);
+            }
+
+            return View(carVMlist);
         }
 
 
@@ -43,11 +61,13 @@ namespace CarsWebApp_Start.Controllers
                 newId = 1;
             }
 
+            Car newCar = new Car();
+            newCar.Id = newId;
             var allCarColors = dbContext.CarColors.ToList();
             var AllCarOptions = dbContext.CarOptions.ToList();
             var selectedCarOptions = new List<int>();
 
-            CarVM carVM = new CarVM(newId, allCarColors, selectedCarOptions, AllCarOptions);
+            CarVM carVM = new CarVM(newCar, allCarColors, selectedCarOptions, AllCarOptions);
             return View(carVM);
         }
 
@@ -59,27 +79,35 @@ namespace CarsWebApp_Start.Controllers
             {
                 try
                 {
-                    Car car = new Car(carVM.Id, carVM.Brand, carVM.Type, carVM.Price, carVM.Year, carVM.CarColorId);
-                    dbContext.Cars.Add(car);
+                    Car newcar = new Car(carVM.Car.Id, carVM.Car.Brand, carVM.Car.Type, carVM.Car.Price, carVM.Car.Year, carVM.Car.CarColorId);
+                    dbContext.Cars.Add(newcar);
+
+                    foreach (var optionId in carVM.SelectedCarOptions)
+                    {
+                        newcar.CarHasOptions.Add(new CarHasOption
+                        {
+                            CarId = newcar.Id,
+                            CarOptionId = optionId
+                        });
+                    }
+
                     await dbContext.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Error creating car with id: {Id}", carVM.Id);
+                    logger.LogError(ex, "Error creating car with id: {Id}", carVM.Car.Id);
                 }
             }
             else
             {
-                logger.LogError("ModelState is Invalid. Car ID: {Id}", carVM.Id);
+                logger.LogError("ModelState is Invalid. Car ID: {Id}", carVM.Car.Id);
             }
 
             carVM.AllCarColors = dbContext.CarColors.ToList();
             return View(carVM);
         }
 
-
-        // GET: CarColors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -97,7 +125,6 @@ namespace CarsWebApp_Start.Controllers
             return View(toDelete);
         }
 
-        // POST: CarColors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -127,23 +154,70 @@ namespace CarsWebApp_Start.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult EditCarWithOptions(int id)
+        {
+            Car? currentCar = dbContext.Cars
+                .Include(c => c.CarHasOptions)
+                .FirstOrDefault(c => c.Id == id);
+            if (currentCar != null)
+            {
+                var allCarColors = dbContext.CarColors.ToList();
+                var AllCarOptions = dbContext.CarOptions.ToList();
+                var selectedCarOptions = dbContext.CarHasOptions
+                                            .Where(o => o.CarId == id)
+                                            .Select(o => o.CarOptionId)
+                                            .ToList();
+
+                CarVM carVM = new CarVM(currentCar, allCarColors, selectedCarOptions, AllCarOptions);
+                return View(carVM);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCarWithOptions(CarVM currentCar)
+        {
+            if (ModelState.IsValid)
+            {
+                Car? carToUpdate = dbContext.Cars
+                    .Include(c => c.CarHasOptions)
+                    .FirstOrDefault(c => c.Id == currentCar.Car.Id);
+                if (carToUpdate != null)
+                {
+
+                    // Update car properties
+                    dbContext.Entry(carToUpdate).CurrentValues.SetValues(currentCar.Car);
+
+                    // Update CarHasOptions
+                    carToUpdate.CarHasOptions.Clear();
+                    foreach (var optionId in currentCar.SelectedCarOptions)
+                    {
+                        carToUpdate.CarHasOptions.Add(new CarHasOption
+                        {
+                            CarId = carToUpdate.Id,
+                            CarOptionId = optionId
+                        });
+                    }
+                    dbContext.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            currentCar.AllCarColors = dbContext.CarColors.ToList();
+            return View(currentCar);
+        }
+
         public ActionResult Edit(int id)
         {
             Car? currentCar = dbContext.Cars.FirstOrDefault(c => c.Id == id);
             if (currentCar != null)
             {
-                //IEnumerable<SelectListItem> carColors = dbContext.CarColors
-                //              .OrderBy(c => c.Color)
-                //              .Select(c => new SelectListItem
-                //              {
-                //                  Value = c.Id.ToString(),
-                //                  Text = c.Color
-                //              }).ToList();
-                //ViewBag.CarColors = carColors;
-
                 IEnumerable<CarColor> carColors = dbContext.CarColors
                                .OrderBy(c => c.Color);
-                               //.ToList();
                 ViewBag.CarColors = carColors;
 
                 return View(currentCar);
@@ -180,9 +254,14 @@ namespace CarsWebApp_Start.Controllers
         public ActionResult ListCarsAndColors()
 
         {
-            var cars = dbContext.Cars.Include(c => c.CarColor).ToList();
-            ViewBag.CarColors = dbContext.CarColors.ToList();
-
+            var cars = dbContext.Cars
+                        .Include(c => c.CarColor)
+                        .OrderBy(c => c.Brand)
+                        .ThenBy(c => c.Type)
+                        .ToList();
+            ViewBag.CarColors = dbContext.CarColors
+                                    .OrderBy(c => c.Color)
+                                    .ToList();
             return View(cars);
         }
 

@@ -19,6 +19,7 @@ public class Car
 
     [Range(10000, 99999)]
     [Required]
+    [Display(Name = "Basic Price")]
     public int Price { get; set; } = 25000;
 
     [Range(2000, 2024)]

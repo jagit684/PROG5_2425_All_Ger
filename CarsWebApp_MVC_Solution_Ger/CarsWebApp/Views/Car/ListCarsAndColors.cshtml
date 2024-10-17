@@ -64,20 +64,10 @@
                                 @* CarColor *@
                                 <select name="CarColorId" asp-for="@item.CarColorId" class="form-control custom-form-control"
                                     asp-items="@selectListItems"></select>
-                                <button type="submit" class="btn btn-primary">Go</button>
+                                <button type="submit" class="btn btn-primary">set</button>
                             </div>
-                            @* <span asp-validation-for="CarColorId" class="text-danger"></span> *@
-                           @*  @Html.DisplayFor(modelItem => item.Id)
-                            @Html.DropDownListFor(modelItem => item.CarColorId,
-                                     new SelectList(
-                                     Model.CarColors, "Id", "Color"),
-                                     "Select Color",
-                                     new { @class = "form-control custom-form-control" }
-                                     ) *@
                     }
                 </td>
-
-
             </tr>
         }
     </tbody>

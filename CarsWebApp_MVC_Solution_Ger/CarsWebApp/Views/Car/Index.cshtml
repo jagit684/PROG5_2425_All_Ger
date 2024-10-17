@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyDomain.Car>
+﻿@model IEnumerable<CarsWebApp.ViewModels.CarVM>
 
 <h4>Cars <span id="car-icons"></span></h4>
 <script>
@@ -13,20 +13,21 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Car.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Brand)
+                @Html.DisplayNameFor(model => model.Car.Brand)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Car.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Car.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                @Html.DisplayNameFor(model => model.CalculatedPrice)
             </th>
+           
             <th>
                 CarColor
             </th>
@@ -39,33 +40,33 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.Car.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Brand)
+                    @Html.DisplayFor(modelItem => item.Car.Brand)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    @Html.DisplayFor(modelItem => item.Car.Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Car.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Year)
+                    @Html.DisplayFor(modelItem => item.CalculatedPrice)
                 </td>
                 <td>
                     <div class="custom-display">
-                        @item.CarColorId
-                        @item.CarColor?.Color
+                        @item.Car.CarColorId
+                        @item.Car.CarColor?.Color
                     </div>
                 </td>
                 <td>
-                    <div style="width: 100px; height: 20px; background-color: @(item.CarColor?.Color ?? "")"></div>
+                    <div style="width: 100px; height: 20px; background-color: @(item.Car.CarColor?.Color ?? "")"></div>
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Edit", "EditCarWithOptions", new { id = item.Car.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Car.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Car.Id })
                 </td>
             </tr>
         }

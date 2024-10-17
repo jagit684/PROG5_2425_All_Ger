@@ -1,11 +1,19 @@
-﻿namespace MyDomain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyDomain
 {
     public class CarHasOption
     {
+        [Key]
         public int CarId { get; set; }
-        public required Car Car { get; set; }
 
+        [Required]
+        public Car Car { get; set; } = null!;
+
+        [Key]
         public int CarOptionId { get; set; }
-        public required CarOption CarOption { get; set; }
+
+        [Required]
+        public CarOption CarOption { get; set; } = null!;
     }
 }

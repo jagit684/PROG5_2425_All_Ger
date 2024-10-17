@@ -1,15 +1,15 @@
 ﻿@model CarsWebApp.ViewModels.CarVM
 
 @{
-    IEnumerable<MyDomain.CarColor> carColors = Model.AllCarColors;
-    var selectListItems = carColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
+
+    var selectListItems = Model.AllCarColors.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Color });
 }
 
-<h4>Car <i class="fa-solid fa-car"></i></h4>
+<h4>CarVM</h4>
 <hr />
+<div class="calc-price-display">Calculated price: @Model.CalculatedPrice</div>
 <div class="row">
-    
-        <form asp-action="Create">
+        <form asp-action="EditCarWithOptions">
             <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Car.Id" />
@@ -40,9 +40,8 @@
                         asp-items="@selectListItems"></select>
                 <span asp-validation-for="Car.CarColorId" class="text-danger"></span>
             </div>
-       </div>
-
-            
+         </div>
+                
 <div class="col-md-12">
             
         <div class="form-group">
@@ -60,7 +59,7 @@
                             @:<div class="col-4">
 
                              <div class="option-container">
-
+    
                                 <input type="checkbox" 
                                        name="SelectedCarOptions"
                                        value="@option.Id"
@@ -70,7 +69,6 @@
                                 <span class="option-price">@option.Price</span>
                              </div>
                             @:</div>
-
                         }
                     @:</div>
                     }
@@ -80,7 +78,7 @@
 
 
             <div class="form-group d-flex justify-content-between">
-                <input type="submit" value="Create" class="btn btn-primary btn-green" />
+                <input type="submit" value="Save" class="btn btn-primary btn-green" />
                 <a asp-action="Index" class="btn btn-secondary btn-red">Cancel</a>
             </div>
         </form>
