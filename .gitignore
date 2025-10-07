@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+CarsWebApp_MVC_Solution_Ger/CarsWebApp/Migrations/20241016192249_FirstCreation.cs
