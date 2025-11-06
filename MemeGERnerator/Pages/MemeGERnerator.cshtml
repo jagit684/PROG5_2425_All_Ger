@@ -1,0 +1,28 @@
+﻿@page
+@{
+    ViewData["Title"] = "MemeGERnerator";
+}
+<script>~/js/meme.js</script>
+
+<h1>MemeGERnerator</h1>
+
+<form id="memeForm">
+    <label for="imageInput">Kies een afbeelding:</label><br />
+    <input type="file" id="imageInput" accept="image/*" /><br /><br />
+
+    <label for="topText">Bovenste tekst:</label><br />
+    <input type="text" id="topText" placeholder="Top text" /><br /><br />
+
+    <label for="bottomText">Onderste tekst:</label><br />
+    <input type="text" id="bottomText" placeholder="Bottom text" /><br /><br />
+
+    <div id="dropZone" style="border: 2px dashed #aaa; padding: 20px; text-align: center;">
+        Sleep hier je afbeelding naartoe of klik op 'Selecteer een bestand'
+    </div>
+
+    <canvas id="memeCanvas" width="600" height="400" style="border:1px solid #ccc;"></canvas><br /><br />
+
+    <button type="button" onclick="downloadMeme()">Download Meme</button>
+    <button type="button" onclick="resetMeme()">Reset Meme</button>
+</form>
+
