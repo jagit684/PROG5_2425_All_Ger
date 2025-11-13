@@ -1,7 +1,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    margin: 40px;
+    margin: 40px 0px;
     background-color: #f9f9f9;
     color: #333;
 }
@@ -12,16 +12,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-/*form {
-    max-width: 700px;
-    margin: auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
 
 input[type="text"], input[type="file"] {
+    flex: 1;
+    min-width: 150px;
+    /*    padding: 6px;*/
+    /*    margin: 0;*/
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -30,6 +26,9 @@ input[type="text"], input[type="file"] {
 }
 
 button {
+/*    padding: 6px 12px;*/
+    font-size: 0.9em;
+
     padding: 10px 20px;
     margin-right: 10px;
     background-color: #0078D7;
@@ -37,22 +36,15 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}*/
-
-input[type="text"], input[type="file"] {
-    flex: 1;
-    min-width: 150px;
-    padding: 6px;
-    margin: 0;
-}
-
-button {
-    padding: 6px 12px;
-    font-size: 0.9em;
 }
 
 form {
-    padding: 10px;
+    max-width: 700px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 button:hover {
