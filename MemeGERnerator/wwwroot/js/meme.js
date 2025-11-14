@@ -6,15 +6,15 @@ const CANVAS_CENTER_X = Math.floor(CANVAS_WIDTH / 2);
 const MAX_IMAGE_SCALE = 1;
 
 const FONT_FAMILY = 'Impact';
-const FONT_SIZE_PX = 40;
+const FONT_SIZE_PX = 50;
 const FONT = `${FONT_SIZE_PX}px ${FONT_FAMILY}`;
 
 const TEXT_FILL_STYLE = 'white';
 const TEXT_STROKE_STYLE = 'black';
 const TEXT_LINE_WIDTH = 2;
 
-const TOP_TEXT_Y = 60;
-const BOTTOM_TEXT_Y = 360;
+const TOP_TEXT_Y = 40;
+const BOTTOM_TEXT_Y = 380;
 
 const DEFAULT_DOMINANT_RGB = '255,255,255';
 const DROPZONE_BORDER_ACTIVE = '#0078D7';
