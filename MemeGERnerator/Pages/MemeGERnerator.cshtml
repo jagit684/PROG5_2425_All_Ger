@@ -2,27 +2,69 @@
 @{
     ViewData["Title"] = "MemeGERnerator";
 }
-<script>~/js/meme.js</script>
 
 <h1>MemeGERnerator</h1>
 
 <form id="memeForm">
-    <label for="imageInput">Kies een afbeelding:</label><br />
-    <input type="file" id="imageInput" accept="image/*" /><br /><br />
-
-    <label for="topText">Bovenste tekst:</label><br />
-    <input type="text" id="topText" placeholder="Top text" /><br /><br />
-
-    <label for="bottomText">Onderste tekst:</label><br />
-    <input type="text" id="bottomText" placeholder="Bottom text" /><br /><br />
-
-    <div id="dropZone" style="border: 2px dashed #aaa; padding: 20px; text-align: center;">
-        Sleep hier je afbeelding naartoe of klik op 'Selecteer een bestand'
+    <div class="mb-3">
+        <label for="imageInput">Kies een afbeelding:</label><br />
+        <input type="file" id="imageInput" accept="image/*" />
     </div>
 
-    <canvas id="memeCanvas" width="600" height="400" style="border:1px solid #ccc;"></canvas><br /><br />
+    <div class="mb-3">
+        <label for="imageUrl">Of plak een afbeelding-URL:</label><br />
+        <input type="url" id="imageUrl" placeholder="https://example.com/afbeelding.jpg" style="width: 100%; max-width: 480px;" />
+        <button type="button" id="loadUrlBtn">Laad URL</button>
+    </div>
+
+    <div id="dropZone" style="border: 2px dashed #aaa; padding: 20px; text-align: center; margin-bottom: 1rem;">
+        Sleep hier je afbeelding naartoe of kies een bestand hierboven
+    </div>
+
+    <div class="mb-3">
+        <label for="topText">Bovenste tekst:</label><br />
+        <input type="text" id="topText" placeholder="Top text" style="width: 100%; max-width: 480px;" />
+        <div style="margin-top: .5rem;">
+            <label for="topFontSize">Lettergrootte (boven):</label>
+            <input type="range" id="topFontSize" min="12" max="100" value="40" />
+            <span id="topFontSizeValue">40</span> px
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="bottomText">Onderste tekst:</label><br />
+        <input type="text" id="bottomText" placeholder="Bottom text" style="width: 100%; max-width: 480px;" />
+        <div style="margin-top: .5rem;">
+            <label for="bottomFontSize">Lettergrootte (onder):</label>
+            <input type="range" id="bottomFontSize" min="12" max="100" value="40" />
+            <span id="bottomFontSizeValue">40</span> px
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="fileName">Bestandsnaam (zonder extensie):</label><br />
+        <input type="text" id="fileName" placeholder="meme" style="width: 100%; max-width: 480px;" />
+        <small class="text-muted">Wordt automatisch ingevuld op basis van de bestandsnaam of URL, kan worden aangepast.</small>
+    </div>
+
+    <canvas id="memeCanvas" width="400" height="400" style="border:1px solid #ccc;"></canvas><br /><br />
 
     <button type="button" onclick="downloadMeme()">Download Meme</button>
     <button type="button" onclick="resetMeme()">Reset Meme</button>
 </form>
+
+<script>
+    // Auto-fill fileName based on uploaded file or URL
+    document.getElementById('imageInput').addEventListener('change', function() {
+        var file = this.files[0];
+        var fileName = file ? file.name.split('.').slice(0, -1).join('.') : '';
+        document.getElementById('fileName').value = fileName;
+    });
+
+    document.getElementById('loadUrlBtn').addEventListener('click', function() {
+        var url = document.getElementById('imageUrl').value;
+        var fileName = url ? url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.')) : '';
+        document.getElementById('fileName').value = fileName;
+    });
+</script>
 
