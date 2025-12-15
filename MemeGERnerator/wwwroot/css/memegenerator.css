@@ -1,9 +1,13 @@
-
 body {
     font-family: Arial, sans-serif;
-    margin: 20px 0px;
+    margin: 0;
+    overflow: hidden; /* avoid scrollbars */
     background-color: #f9f9f9;
     color: #333;
+}
+
+html, body {
+    height: 100%;
 }
 
 h1 {
@@ -11,7 +15,6 @@ h1 {
     color: #444;
     margin-bottom: 20px;
 }
-
 
 input[type="text"], input[type="file"] {
     flex: 1;
@@ -55,4 +58,113 @@ canvas {
     display: block;
     margin: 20px auto;
     border: 2px solid #ccc;
+}
+
+/* Fullscreen, no scrollbars, two-column layout */
+body {
+    margin: 0;
+    overflow: hidden; /* avoid scrollbars */
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif;
+}
+
+html, body { height: 100%; }
+
+.mg-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* left and right halves */
+    gap: 12px;
+    height: 100vh; /* fill viewport */
+    padding: 12px; /* small padding */
+    box-sizing: border-box;
+}
+
+.mg-left, .mg-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0; /* allow children to shrink */
+}
+
+.mg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 480px;
+}
+
+.mg-form input[type="text"],
+.mg-form input[type="url"],
+.mg-form input[type="file"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mg-dropzone {
+    border: 2px dashed #aaa;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.mg-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mg-actions-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 8px;
+}
+
+.mg-canvas-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    margin-bottom: 1rem;
+}
+
+.mg-sliders {
+    display: flex;
+    flex-direction: column;
+}
+
+.mg-slider {
+    margin-bottom: 1rem;
+}
+
+/* Make sure the Layout main container does not add extra scroll */
+.container {
+    max-width: 100%;
+    padding: 0;
+}
+
+footer.footer, header {
+    display: none; /* hide default header/footer to fit one screen */
+}
+
+.mg-right-title {
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.mg-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.mg-file-btn {
+    display: inline-block;
+    cursor: pointer;
 }
