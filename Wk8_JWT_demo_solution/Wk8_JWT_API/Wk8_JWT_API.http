@@ -1,6 +1,0 @@
-@Wk8_JWT_API_HostAddress = http://localhost:5184
-
-GET {{Wk8_JWT_API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

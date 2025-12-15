@@ -7,7 +7,6 @@ const MAX_IMAGE_SCALE = 1;
 
 const FONT_FAMILY = 'Impact';
 const DEFAULT_FONT_SIZE_PX = 40;
-
 const TEXT_FILL_STYLE = 'white';
 const TEXT_STROKE_STYLE = 'black';
 const TEXT_LINE_WIDTH = 2;
