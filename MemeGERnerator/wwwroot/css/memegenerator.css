@@ -168,3 +168,21 @@ footer.footer, header {
     display: inline-block;
     cursor: pointer;
 }
+
+/* Color option styling */
+.color-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.color-square {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+

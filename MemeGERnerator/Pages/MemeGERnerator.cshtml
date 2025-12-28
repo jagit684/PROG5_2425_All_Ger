@@ -41,7 +41,7 @@
             </div>
 
             <div class="mg-actions">
-                <button type="button" class="btn btn-success btn-sm" onclick="downloadMeme()">Download Meme</button>
+                <button type="button" class="btn btn-success btn-sm" onclick="downloadMeme()">Save meme</button>
                 <button type="button" class="btn btn-secondary btn-sm" onclick="resetMeme()">Reset Meme</button>
             </div>
         </form>
@@ -53,7 +53,7 @@
             <canvas id="memeCanvas" width="400" height="400"></canvas>
         </div>
         <div class="mg-actions-right">
-            <button type="button" class="btn btn-success btn-sm" onclick="downloadMeme()">Download Meme</button>
+            <button type="button" class="btn btn-success btn-sm" onclick="downloadMeme()">Save meme</button>
             <button type="button" class="btn btn-secondary btn-sm" onclick="resetMeme()">Reset Meme</button>
         </div>
         <div class="mg-sliders">
@@ -67,22 +67,35 @@
                 <input type="range" id="bottomFontSize" min="12" max="100" value="40" />
                 <span id="bottomFontSizeValue">40</span> px
             </div>
+            <div class="mg-slider">
+                <label>Achtergrondkleur:</label><br />
+                <div class="color-option">
+                    <span class="color-square" id="colorSquareDominant"></span>
+                    <input type="radio" id="bgColorDominant" name="bgColor" value="dominant" checked />
+                    <label for="bgColorDominant">Dominante kleur</label>
+                </div>
+                <div class="color-option">
+                    <span class="color-square" id="colorSquareSecondary"></span>
+                    <input type="radio" id="bgColorSecondary" name="bgColor" value="secondary" />
+                    <label for="bgColorSecondary">Tweede kleur</label>
+                </div>
+                <div class="color-option">
+                    <span class="color-square" id="colorSquareLightGray"></span>
+                    <input type="radio" id="bgColorLightGray" name="bgColor" value="lightgray" />
+                    <label for="bgColorLightGray">Lichtgrijs (bijna wit)</label>
+                </div>
+                <div class="color-option">
+                    <span class="color-square" id="colorSquareDarkGray"></span>
+                    <input type="radio" id="bgColorDarkGray" name="bgColor" value="darkgray" />
+                    <label for="bgColorDarkGray">Donkergrijs (bijna zwart)</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<script>
-    // Auto-fill fileName based on uploaded file or URL
-    document.getElementById('imageInput').addEventListener('change', function() {
-        var file = this.files[0];
-        var fileName = file ? file.name.split('.').slice(0, -1).join('.') : '';
-        document.getElementById('fileName').value = fileName;
-    });
-
-    document.getElementById('loadUrlBtn').addEventListener('click', function() {
-        var url = document.getElementById('imageUrl').value;
-        var fileName = url ? url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.')) : '';
-        document.getElementById('fileName').value = fileName;
-    });
-</script>
+@section Scripts {
+    <script src="~/js/meme-core.js"></script>
+    <script src="~/js/meme-ui.js"></script>
+}
 
